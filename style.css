@@ -52,6 +52,7 @@ header, footer {
     justify-content: flex-end;
     padding: 24px;
 
+    font-family: monospace;
     font-size: 32px;
 
     background-color: blue;

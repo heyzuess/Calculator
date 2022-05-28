@@ -6,7 +6,7 @@ class Calculator {
         this.action = '';
         this.actions = ['+', '-', '*', '/', '%'];
         this.init = true;
-        this.maxDisplay = 13;
+        this.maxDisplay = 10;
     }
 
     static add (a, b) {
@@ -79,6 +79,11 @@ const display = document.getElementById('display');
 
 let myCalculator = new Calculator();
 
+const ogFontSize = window.getComputedStyle(display).fontSize;
+const ogLimit = myCalculator.maxDisplay;
+let resizeVal = .25;
+let resizeStep = .25;
+
 let actionUpdate = (action) => {
     if (myCalculator.action === '' && myCalculator.actions.includes(action)) {
         myCalculator.value1 = parseFloat(display.innerText);
@@ -91,6 +96,20 @@ let actionUpdate = (action) => {
     if (myCalculator.init) {
         display.innerText = '';
         myCalculator.init = false;
+    }
+
+    /* Will resize text on screen to allow more input */ 
+    if (display.innerText.length + 1 > myCalculator.maxDisplay) {
+        let currentSize = parseInt(ogFontSize.replaceAll('px'));
+        let newSize = parseInt(currentSize - (currentSize * resizeVal));
+
+        if (newSize <= 0) return;
+         
+        let newLimit = parseInt(ogLimit * (1 / (1 - resizeVal)));
+        resizeVal = Math.min(resizeVal + resizeStep, 1);
+
+        display.style.fontSize = `${newSize}px`;
+        myCalculator.maxDisplay = newLimit;
     }
 
     display.innerText += action;
@@ -109,6 +128,11 @@ for (let option of options) {
 actions.clear.addEventListener('click', (ev) => {
     myCalculator.clear();
     display.innerText = myCalculator.result;
+
+    /* Reseting original size values */ 
+    display.style.fontSize = ogFontSize;
+    myCalculator.maxDisplay = ogLimit;
+    resizeVal = resizeStep;
 });
 
 actions.equals.addEventListener('click', () => {
