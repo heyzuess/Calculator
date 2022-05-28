@@ -48,9 +48,20 @@ class Calculator {
         this.result = Calculator.action(this.action, this.value1, this.value2);
 
         /* This keeps the result to a fixed size so it doesnt stretch calculator
-           a full stop character takes up two px with current font, hence the +2 */
+           a full stop character takes up two px with current font, hence the +2.
+           
+           We will only set fixed position once the precision length is greater 
+           than our limit. */
         let temp = parseInt(this.result).toString();
-        this.result = this.result.toFixed(Math.max(this.maxDisplay - (temp.length + 2), 0));
+        let precision = this.result.toString().split(".");
+
+        if (precision.length <= 1) return;
+
+        precision = precision[1].length;
+        
+        let limit = (this.maxDisplay - (temp.length + 2));
+
+        if (precision > limit) this.result = this.result.toFixed(Math.max(limit, 0));
     }
 
     clear() {
