@@ -16,7 +16,16 @@ body {
     background-color: orange;
 }
 
+header {
+    font-size: 48px;
+}
+
 header, footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+
     background-color: purple;
 }
 
@@ -72,4 +81,25 @@ header, footer {
 
 #zero {
     flex: 1;
+}
+
+button.col {
+    color: white;
+}
+
+button.col:active,
+button.action.special:active {
+    background-color: white;
+}
+
+button.option {
+    background-color: slategray;
+}
+
+button.action.special {
+    background-color: black;
+}
+
+button.action {
+    background-color: orange;
 }
