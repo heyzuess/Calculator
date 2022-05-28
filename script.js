@@ -46,6 +46,11 @@ class Calculator {
 
     evaluate () {
         this.result = Calculator.action(this.action, this.value1, this.value2);
+
+        /* This keeps the result to a fixed size so it doesnt stretch calculator
+           a full stop character takes up two px with current font, hence the +2 */
+        let temp = parseInt(this.result).toString();
+        this.result = this.result.toFixed(Math.max(this.maxDisplay - (temp.length + 2), 0));
     }
 
     clear() {
