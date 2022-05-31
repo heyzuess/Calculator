@@ -89,7 +89,8 @@ button.col {
 }
 
 button.col:active,
-button.action.special:active {
+button.action.special:active,
+button.action.active:active {
     background-color: white;
 }
 
@@ -103,4 +104,8 @@ button.action.special {
 
 button.action {
     background-color: orange;
+}
+
+button.action.active {
+    background-color: darkorange;
 }

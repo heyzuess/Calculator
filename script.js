@@ -84,12 +84,29 @@ const ogLimit = myCalculator.maxDisplay;
 let resizeVal = .25;
 let resizeStep = .25;
 
-let actionUpdate = (action) => {
-    if (myCalculator.action === '' && myCalculator.actions.includes(action)) {
+let actionUpdate = (ev, action) => {
+    if (!myCalculator.action && myCalculator.actions.includes(action)) {
         myCalculator.value1 = parseFloat(display.innerText);
         myCalculator.action = action;
         myCalculator.init = true;
-        display.innerText = action;
+
+        ev.target.classList.add('active');
+
+        return;
+    }
+
+    if (myCalculator.action && myCalculator.actions.includes(action)) {
+        myCalculator.value2 = parseFloat(display.innerText);
+        myCalculator.evaluate();
+        myCalculator.value1 = myCalculator.result;
+        myCalculator.init = true;
+
+        myCalculator.action = action;
+        display.innerText = myCalculator.result;
+
+        clearActive();
+        ev.target.classList.add('active');
+
         return;
     }
 
@@ -115,18 +132,19 @@ let actionUpdate = (action) => {
     display.innerText += action;
 };
 
-actions.add.addEventListener('click', () => actionUpdate('+'));
-actions.subtract.addEventListener('click', () => actionUpdate('-'));
-actions.divide.addEventListener('click', () => actionUpdate('/'));
-actions.multiply.addEventListener('click', () => actionUpdate('*'));
-actions.modulo.addEventListener('click', () => actionUpdate('%'));
+actions.add.addEventListener('click', (ev) => actionUpdate(ev, '+'));
+actions.subtract.addEventListener('click', (ev) => actionUpdate(ev, '-'));
+actions.divide.addEventListener('click', (ev) => actionUpdate(ev, '/'));
+actions.multiply.addEventListener('click', (ev) => actionUpdate(ev, '*'));
+actions.modulo.addEventListener('click', (ev) => actionUpdate(ev, '%'));
 
 for (let option of options) {
-    option.addEventListener('click', () => actionUpdate(option.innerText));
+    option.addEventListener('click', (ev) => actionUpdate(ev, option.innerText));
 }
 
 actions.clear.addEventListener('click', (ev) => {
     myCalculator.clear();
+    clearActive();
     display.innerText = myCalculator.result;
 
     /* Reseting original size values */ 
@@ -140,7 +158,10 @@ actions.equals.addEventListener('click', () => {
     myCalculator.evaluate();
     myCalculator.value1 = myCalculator.result;
     myCalculator.init = true;
+    
     myCalculator.action = '';
+
+    clearActive();
 
     display.innerText = myCalculator.result;
 });
@@ -153,3 +174,8 @@ actions.plusminus.addEventListener('click', () => {
     temp = parseFloat(temp) * -1;
     display.innerText = temp;
 });
+
+function clearActive () {
+    let activeActions = Array.from(document.querySelectorAll('.action.active'));
+    if (activeActions) activeActions.forEach(action => action.classList.remove('active'));
+}
