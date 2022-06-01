@@ -113,7 +113,7 @@ button.col {
     color: white;
 }
 
-button.action.active:active {
+button.col.action:active {
     background-color: var(--dark-orange);
 }
 
