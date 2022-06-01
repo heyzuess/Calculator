@@ -92,7 +92,7 @@ document.addEventListener('keydown', keyboardInput);
 let numbers = Array.from(options);
 numbers.forEach(option => {
     let temp = parseInt(option.innerText);
-    if (!temp) return;
+    if (!temp && temp !== 0) return;
     option.id = temp.toString();
 });
 
