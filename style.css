@@ -80,7 +80,7 @@ header, footer {
     border: 1px solid white;
 }
 
-#zero {
+.wide {
     flex: 1;
 }
 
