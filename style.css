@@ -63,6 +63,7 @@ button#equals {
     border-radius: 16px;
     opacity: 90%;
     background-color: var(--dark-grey);
+    box-shadow: 16px 16px black;
 }
 
 #calcBody {
