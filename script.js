@@ -242,7 +242,7 @@ function keyboardInput (ev) {
                 break;
             default:
                 // If not handled then ignore key input
-                console.log(`unhandled key: ${ev.key}`);
+                //console.log(`unhandled key: ${ev.key}`);
                 break;
         }
         return;
